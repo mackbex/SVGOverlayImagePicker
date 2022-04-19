@@ -37,9 +37,10 @@ class AlbumsFragment: Fragment() {
             TabLayoutMediator(tabAlbum, pagerAlbum) { tab, position ->
                 tab.text = when(position) {
                     0 -> { getString(R.string.title_tab_my_albums)}
+                    1 -> { getString(R.string.title_tab_my_albums)}
                     else -> { throw Resources.NotFoundException("No position found.")}
                 }
-            }
+            }.attach()
         }
     }
 }

@@ -66,6 +66,7 @@
     <style name="TabLayout" parent="Theme.SVGOverlayImagePicker">
         <item name="tabSelectedTextColor">@color/dark_green_2</item>
         <item name="tabIndicatorColor">@color/dark_green_1</item>
+        <item name="android:background">@color/beige</item>
     </style>
 
     <style name="TabLayout.TabItem" parent="@style/TextAppearance.MaterialComponents.Headline6">

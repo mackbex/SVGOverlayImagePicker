@@ -39,27 +39,45 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:theme="@style/Theme.Layout.BG"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_album"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="5dp"
-                android:theme="@style/TabLayout"
+                style="@style/TabLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="scrollable"
-                app:tabPaddingStart="28dp"
+                app:tabMinWidth="120dp"
+                android:paddingStart="28dp"
+                android:paddingEnd="28dp"
                 app:tabTextAppearance="@style/TabLayout.TabItem">
 
                 <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
                     tools:text="My Albums" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    tools:text="My Albums" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    tools:text="My Albums" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    tools:text="My Albums" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    tools:text="My Albums" />
+
             </com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager2.widget.ViewPager2

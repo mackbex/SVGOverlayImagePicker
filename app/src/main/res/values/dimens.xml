@@ -13,4 +13,5 @@
     <dimen name="fragment_review_layout_padding">20dp</dimen>
     <dimen name="toolbar_title_margin_top">39dp</dimen>
     <dimen name="toolbar_height">77dp</dimen>
+    <dimen name="tablayout_item_padding">28dp</dimen>
 </resources>
