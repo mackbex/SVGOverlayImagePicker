@@ -10,7 +10,7 @@
             type="android.view.View.OnClickListener"/>
         <variable
             name="model"
-            type="com.jobplanet.company.domain.model.Theme" />
+            type="com.picker.overlay.domain.model.Theme" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

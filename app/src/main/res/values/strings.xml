@@ -5,7 +5,7 @@
     <string name="appbar_action_search">Search</string>
     <string name="err_failed_load_data">Failed to load data.</string>
     <string name="hint_input_company">Input company name</string>
-    <string name="title_company">Company</string>
+    <string name="title_album_list">Album List</string>
     <string name="title_avg_salary">Average salary</string>
     <string name="title_unit_salary">Manwon</string>
     <string name="title_interview_question">Interview questions</string>
@@ -14,4 +14,5 @@
     <string name="title_pros">Pros</string>
     <string name="title_cons">Cons</string>
     <string name="btn_more_review_info">More review info</string>
+    <string name="title_tab_my_albums">My Albums</string>
 </resources>

@@ -7,13 +7,13 @@
 
         <import type="android.view.View" />
 
-        <import type="com.jobplanet.company.domain.model.SearchResult" />
+        <import type="com.picker.overlay.domain.model.SearchResult" />
 
-        <import type="com.jobplanet.company.util.Resource" />
+        <import type="com.picker.overlay.util.Resource" />
 
         <variable
             name="viewModel"
-            type="com.jobplanet.company.ui.company.search.SearchViewModel" />
+            type="com.picker.overlay.ui.company.search.SearchViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -24,7 +24,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.CompanySearch.AppBarOverlay">
+            android:theme="@style/Theme.SVGOverlayImagePicker.AppBarOverlay">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"

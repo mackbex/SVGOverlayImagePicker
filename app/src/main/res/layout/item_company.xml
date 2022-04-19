@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.jobplanet.company.domain.model.Company" />
+            type="com.picker.overlay.domain.model.Company" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.2"
-            android:text="@string/title_company"
+            android:text="@string/title_album_list"
             app:layout_constraintBottom_toBottomOf="@id/img_forward"
             app:layout_constraintEnd_toStartOf="@id/img_forward"
             app:layout_constraintTop_toTopOf="@id/img_forward" />
@@ -115,7 +115,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:theme="@style/Theme.CompanySearch.UnderLineView"
+            android:theme="@style/Theme.SVGOverlayImagePicker.UnderLineView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

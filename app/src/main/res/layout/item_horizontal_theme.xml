@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="model"
-            type="com.jobplanet.company.domain.model.HorizontalTheme" />
+            type="com.picker.overlay.domain.model.HorizontalTheme" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:theme="@style/Theme.CompanySearch.UnderLineView"
+            android:theme="@style/Theme.SVGOverlayImagePicker.UnderLineView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

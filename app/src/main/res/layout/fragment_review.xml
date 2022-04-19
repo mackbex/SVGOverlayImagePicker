@@ -7,11 +7,11 @@
 
         <variable
             name="model"
-            type="com.jobplanet.company.domain.model.Review" />
+            type="com.picker.overlay.domain.model.Review" />
 
         <variable
             name="viewModel"
-            type="com.jobplanet.company.ui.company.review.ReviewViewModel" />
+            type="com.picker.overlay.ui.company.review.ReviewViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -22,7 +22,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.CompanySearch.AppBarOverlay">
+            android:theme="@style/Theme.SVGOverlayImagePicker.AppBarOverlay">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -40,7 +40,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:theme="@style/Theme.Layout.Detail.BG"
+            android:theme="@style/Theme.Layout.BG"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,7 +142,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:theme="@style/Theme.CompanySearch.UnderLineView"
+                    android:theme="@style/Theme.SVGOverlayImagePicker.UnderLineView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_header" />
@@ -256,7 +256,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:theme="@style/Theme.CompanySearch.UnderLineView"
+                            android:theme="@style/Theme.SVGOverlayImagePicker.UnderLineView"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/layout_main" />

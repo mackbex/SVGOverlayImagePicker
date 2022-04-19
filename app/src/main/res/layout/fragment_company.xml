@@ -7,11 +7,11 @@
 
         <variable
             name="model"
-            type="com.jobplanet.company.domain.model.Company" />
+            type="com.picker.overlay.domain.model.Company" />
 
         <variable
             name="viewModel"
-            type="com.jobplanet.company.ui.company.company.CompanyViewModel" />
+            type="com.picker.overlay.ui.company.company.CompanyViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -22,7 +22,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.CompanySearch.AppBarOverlay">
+            android:theme="@style/Theme.SVGOverlayImagePicker.AppBarOverlay">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -33,14 +33,14 @@
                 app:layout_collapseMode="pin"
                 app:menu="@menu/menu_company"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-                app:title="@string/title_company"
+                app:title="@string/title_album_list"
                 app:titleTextColor="?attr/colorOnPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:theme="@style/Theme.Layout.Detail.BG"
+            android:theme="@style/Theme.Layout.BG"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,7 +142,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:theme="@style/Theme.CompanySearch.UnderLineView"
+                    android:theme="@style/Theme.SVGOverlayImagePicker.UnderLineView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_header" />
@@ -264,7 +264,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:theme="@style/Theme.CompanySearch.UnderLineView"
+                            android:theme="@style/Theme.SVGOverlayImagePicker.UnderLineView"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/layout_main" />

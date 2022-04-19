@@ -5,8 +5,12 @@
     <dimen name="item_rate_margin_end">10dp</dimen>
     <dimen name="list_item_height">100dp</dimen>
     <dimen name="item_industry_margin">10dp</dimen>
-    <dimen name="list_item_cardview_width">140dp</dimen>
-    <dimen name="list_item_cardview_height">210dp</dimen>
+    <dimen name="list_item_cardview_width">170dp</dimen>
+    <dimen name="list_item_cardview_height">219dp</dimen>
+    <dimen name="list_item_album_image_width">170dp</dimen>
+    <dimen name="list_item_album_image_height">170dp</dimen>
     <dimen name="fragment_company_layout_padding">20dp</dimen>
     <dimen name="fragment_review_layout_padding">20dp</dimen>
+    <dimen name="toolbar_title_margin_top">39dp</dimen>
+    <dimen name="toolbar_height">77dp</dimen>
 </resources>

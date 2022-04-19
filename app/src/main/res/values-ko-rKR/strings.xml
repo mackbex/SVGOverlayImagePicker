@@ -6,7 +6,7 @@
     <string name="appbar_action_search">검색</string>
     <string name="err_failed_load_data">데이터 로드에 실패했습니다.</string>
     <string name="hint_input_company">회사명을 입력하세요</string>
-    <string name="title_company">회사</string>
+    <string name="title_album_list">앨범 리스트</string>
     <string name="title_avg_salary">평균연봉</string>
     <string name="title_unit_salary">만원</string>
     <string name="title_interview_question">면접질문</string>
@@ -15,4 +15,5 @@
     <string name="title_pros">장점</string>
     <string name="title_cons">단점</string>
     <string name="btn_more_review_info">기업리뷰 더보기</string>
+    <string name="title_tab_my_albums">내 앨범</string>
 </resources>

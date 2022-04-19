@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jobplanet.company">
+    package="com.picker.overlay">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.jobplanet.company.Application"
+        android:name="com.picker.overlay.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CompanySearch">
+        android:theme="@style/Theme.SVGOverlayImagePicker">
         <activity
-            android:name="com.jobplanet.company.MainActivity"
+            android:name="com.picker.overlay.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.CompanySearch.NoActionBar">
+            android:theme="@style/Theme.SVGOverlayImagePicker.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
