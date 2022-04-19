@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.jobplanet.company.ui.company.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_company_search"
+        >
+
+        <action
+            android:id="@+id/action_searchFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_searchFragment_to_companyFragment"
+            app:destination="@id/companyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/companyFragment"
+        android:name="com.jobplanet.company.ui.company.company.CompanyFragment"
+        android:label="CompanyFragment"
+        tools:layout="@layout/fragment_company" >
+        <argument
+            android:name="company"
+            app:argType="com.jobplanet.company.domain.model.Company" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.jobplanet.company.ui.company.review.ReviewFragment"
+        android:label="ReviewFragment"
+        tools:layout="@layout/fragment_review" >
+        <argument
+            android:name="review"
+            app:argType="com.jobplanet.company.domain.model.Review"/>
+    </fragment>
+</navigation>

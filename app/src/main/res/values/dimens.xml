@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_item_cell_margin">20dp</dimen>
+    <dimen name="item_rate_margin_start">6dp</dimen>
+    <dimen name="item_rate_margin_end">10dp</dimen>
+    <dimen name="list_item_height">100dp</dimen>
+    <dimen name="item_industry_margin">10dp</dimen>
+    <dimen name="list_item_cardview_width">140dp</dimen>
+    <dimen name="list_item_cardview_height">210dp</dimen>
+    <dimen name="fragment_company_layout_padding">20dp</dimen>
+    <dimen name="fragment_review_layout_padding">20dp</dimen>
+</resources>
