@@ -53,7 +53,8 @@
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="scrollable"
                 app:tabMinWidth="120dp"
-                android:paddingStart="28dp"
+                app:tabPaddingStart="-28dp"
+                android:paddingStart="0dp"
                 android:paddingEnd="28dp"
                 app:tabTextAppearance="@style/TabLayout.TabItem">
 

@@ -91,7 +91,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{viewModel.companyListState instanceof Resource.Success ? View.VISIBLE : View.GONE}"
-                app:items="@{viewModel.companyListState}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 

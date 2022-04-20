@@ -10,7 +10,7 @@
             type="android.view.View.OnClickListener"/>
         <variable
             name="model"
-            type="com.picker.overlay.domain.model.Theme" />
+            type="com.picker.overlay.domain.model.Album" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +44,7 @@
                         android:id="@+id/img_theme"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:coverImage="@{model}"
+                        android:src="@color/dark_green_1"
                         tools:src="@color/dark_green_1"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
