@@ -11,7 +11,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.jobplanet.company"
+        applicationId "com.picker.overlay"
         minSdk 28
         targetSdk 31
         versionCode 1

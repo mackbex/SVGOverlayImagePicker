@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
+            name="listAdapter"
+            type="com.picker.overlay.ui.picker.album.list.AlbumListAdapter" />
+
+        <variable
             name="viewModel"
             type="com.picker.overlay.ui.picker.album.list.AlbumListViewModel" />
 
@@ -19,6 +23,7 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/item_album"
             app:items="@{viewModel.albumListState}"
+            app:listAdapter="@{listAdapter}"
             app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 

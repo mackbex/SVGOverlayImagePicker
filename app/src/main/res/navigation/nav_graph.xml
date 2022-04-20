@@ -16,7 +16,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/photoPickerFragment"
@@ -27,6 +27,23 @@
         <argument
             android:name="album"
             app:argType="com.picker.overlay.domain.model.PhotoAlbum" />
+        <action
+            android:id="@+id/action_photoPickerFragment_to_overlayFragment"
+            app:destination="@id/overlayFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
 
+    </fragment>
+    <fragment
+        android:id="@+id/overlayFragment"
+        android:name="com.picker.overlay.ui.picker.overlay.OverlayFragment"
+        android:label="OverlayFragment"
+        tools:layout="@layout/fragment_photo_overlay"
+        >
+        <argument
+            android:name="photo"
+            app:argType="com.picker.overlay.domain.model.Photo" />
     </fragment>
 </navigation>

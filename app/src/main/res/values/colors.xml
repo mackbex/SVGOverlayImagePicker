@@ -24,7 +24,8 @@
     <color name="light_blue_300">#4FC3F7</color>
     <color name="red_700">#D32F2F</color>
     <color name="red_500">#F44336</color>
-    <color name="beige">#FFFBE6</color>
+    <color name="beige_1">#FFFBE6</color>
+    <color name="beige_2">#E3DCB8</color>
     <color name="dark_green_1">#336959</color>
     <color name="dark_green_2">#32695A</color>
     <color name="light_green">#E3EBD8</color>

@@ -6,6 +6,14 @@
     <data>
 
         <variable
+            name="model"
+            type="com.picker.overlay.domain.model.Album" />
+
+        <variable
+            name="listAdapter"
+            type="com.picker.overlay.ui.picker.photo.PhotoPickerAdapter" />
+
+        <variable
             name="viewModel"
             type="com.picker.overlay.ui.picker.photo.PhotoPickerViewModel" />
     </data>
@@ -20,31 +28,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.SVGOverlayImagePicker.AppBarOverlay"
-            app:elevation="0dp">
+            app:elevation="5dp">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.ActionBar.Primary"
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
-                app:contentInsetStart="28dp"
-                app:layout_collapseMode="pin"
-                app:menu="@menu/menu_company"
-                app:title="@string/title_album_list"
-                app:titleMarginTop="@dimen/toolbar_title_margin_top"
-                app:titleTextAppearance="@style/Toolbar.TitleText"
-                app:titleTextColor="?attr/colorOnPrimary" />
+                app:contentInsetEnd="0dp"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="37dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginBottom="14dp">
+
+                    <ImageButton
+                        android:id="@+id/nav_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_baseline_arrow_back_26"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/dark_green_1"
+                        />
+
+                    <View
+                        android:id="@+id/toolbar_divider"
+                        android:layout_width="1dp"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@color/beige_2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/nav_back"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:textAppearance="@style/Toolbar.TitleText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/toolbar_divider"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:text="@{model.title}"
+                        tools:text="Album" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+
             android:layout_height="match_parent"
             android:theme="@style/Theme.Layout.BG"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_photo_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:items="@{viewModel.photoListState}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listAdapter="@{listAdapter}"
+                app:spanCount="3"
+                tools:layout_editor_absoluteX="43dp"
+                tools:layout_editor_absoluteY="350dp"
+                tools:listitem="@layout/item_photo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

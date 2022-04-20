@@ -14,6 +14,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/beige_1</item>
         <item name="android:textColorPrimary">@color/grey_200</item>
         <item name="android:textColorSecondary">@color/grey_500</item>
     </style>

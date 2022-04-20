@@ -6,9 +6,6 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener"/>
-        <variable
             name="model"
             type="com.picker.overlay.domain.model.Album" />
     </data>
@@ -16,15 +13,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
         >
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card"
             app:cardCornerRadius="3dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:onClick="@{clickListener}"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

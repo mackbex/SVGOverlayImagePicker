@@ -15,4 +15,5 @@
     <string name="title_cons">Cons</string>
     <string name="btn_more_review_info">More review info</string>
     <string name="title_tab_my_albums">My Albums</string>
+    <string name="btn_overlay">Overlay</string>
 </resources>

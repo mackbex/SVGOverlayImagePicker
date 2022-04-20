@@ -19,20 +19,13 @@ class AlbumListViewModel @Inject constructor(
 
     fun getAlbumList() {
         viewModelScope.launch {
-
             val resultList = mutableListOf<Album>()
-
             for(i in 0 until 100) {
                 resultList.add(
-                    PhotoAlbum(
-                        "$i",
-                        arrayListOf()
-                    )
+                    PhotoAlbum("$i", arrayListOf())
                 )
             }
-
             albumListState.value = Resource.Success(resultList)
         }
     }
-
 }

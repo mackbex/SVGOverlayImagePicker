@@ -1,4 +1,4 @@
-package com.picker.overlay.ui.picker.album.list
+package com.picker.overlay.ui.picker.photo
 
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -6,27 +6,23 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
-//import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.R
-import com.picker.overlay.databinding.ItemAlbumBinding
-import com.picker.overlay.databinding.ItemHorizontalThemeCardviewBinding
-import com.picker.overlay.domain.model.*
+import com.picker.overlay.databinding.ItemPhotoBinding
+import com.picker.overlay.domain.model.Album
 
 
-
-class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(
+class PhotoPickerAdapter : ListAdapter<String, PhotoPickerAdapter.ViewHolder>(
     ItemDiffCallback()
 ) {
-    private var listener: ((album:Album, binding: ViewDataBinding) -> Unit)? = null
+    private var listener: ((item:String, binding: ViewDataBinding) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            viewType,
+            R.layout.item_photo,
             parent,
             false))
     }
@@ -35,42 +31,31 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(
         holder.bind(getItem(position))
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when(currentList[position]) {
-            is PhotoAlbum -> R.layout.item_album
-            else -> throw Resources.NotFoundException("No matched layout found.")
-        }
-    }
-
-    fun setPostInterface(listener: ((item:Album,binding:ViewDataBinding) -> Unit)?) {
+    fun setPostInterface(listener: ((item: String, binding:ViewDataBinding) -> Unit)?) {
         this.listener = listener
     }
 
     inner class ViewHolder(private val binding: ViewDataBinding):
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item:Album) {
-            binding.setVariable(BR.model, item)
+        fun bind(item:String) {
             listener?.invoke(item, binding)
-
             binding.executePendingBindings()
         }
     }
 
-    private class ItemDiffCallback : DiffUtil.ItemCallback<Album>() {
-
+    private class ItemDiffCallback : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(
-            oldItem: Album,
-            newItem: Album
+            oldItem: String,
+            newItem: String
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: Album,
-            newItem: Album
+            oldItem: String,
+            newItem: String
         ): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem == newItem
         }
     }
 }

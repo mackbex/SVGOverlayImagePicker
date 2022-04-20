@@ -7,22 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.databinding.FragmentAlbumListBinding
+import com.picker.overlay.databinding.ItemAlbumBinding
 import com.picker.overlay.domain.model.PhotoAlbum
+import com.picker.overlay.ui.picker.album.AlbumsFragmentDirections
 import com.picker.overlay.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AlbumListFragment: Fragment() {
-    private var binding : FragmentAlbumListBinding by autoCleared()
+class AlbumListFragment : Fragment() {
+    private var binding: FragmentAlbumListBinding by autoCleared()
     private val viewModel: AlbumListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ):View {
+    ): View {
         binding = FragmentAlbumListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,16 +36,15 @@ class AlbumListFragment: Fragment() {
             lifecycleOwner = viewLifecycleOwner
 
             rcAlbumList.adapter = AlbumListAdapter().apply {
+                listAdapter = this
                 setPostInterface { item, binding ->
-                    when(item) {
+                    when (item) {
                         is PhotoAlbum -> {
                             binding.root.setOnClickListener {
-                                Snackbar.make(it, item.title ?: run { "" }, Snackbar.LENGTH_SHORT).show()
+                                findNavController().navigate(AlbumsFragmentDirections.actionAlbumListFragmentToPhotoPickerFragment(item))
                             }
                         }
                     }
-
-//                    Snackbar.make(view, item.title, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
