@@ -1,25 +1,36 @@
 package com.picker.overlay.ui.picker.album.list
 
+import android.Manifest
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.picker.overlay.R
+import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentAlbumListBinding
 import com.picker.overlay.databinding.ItemAlbumBinding
 import com.picker.overlay.domain.model.PhotoAlbum
 import com.picker.overlay.ui.picker.album.AlbumsFragmentDirections
+import com.picker.overlay.util.Resource
 import com.picker.overlay.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AlbumListFragment : Fragment() {
     private var binding: FragmentAlbumListBinding by autoCleared()
     private val viewModel: AlbumListViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +60,38 @@ class AlbumListFragment : Fragment() {
             }
         }
 
-        viewModel.getAlbumList()
+        initStates()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if(!sharedViewModel.permissionGranted) {
+            sharedViewModel.requestPermission(requireActivity())
+        }
+        else {
+            viewModel.getAlbumList()
+        }
+    }
+
+    private fun initStates() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.albumListState.collect {
+                        when(it) {
+                            is Resource.Success -> {
+                                (binding.rcAlbumList.adapter as AlbumListAdapter).submitList(it.data.values.toList())
+                            }
+                            is Resource.Failure -> {
+                                Snackbar.make(binding.rcAlbumList, getString(
+                                    R.string.err_failed_load_data), Snackbar.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }

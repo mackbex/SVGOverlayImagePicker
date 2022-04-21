@@ -17,4 +17,5 @@
     <string name="btn_more_review_info">기업리뷰 더보기</string>
     <string name="title_tab_my_albums">내 앨범</string>
     <string name="btn_overlay">오버레이</string>
+    <string name="desc_album_size">%s Items</string>
 </resources>

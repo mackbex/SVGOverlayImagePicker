@@ -28,18 +28,19 @@
         <entry key="..\:/Android/mpanySearch/app/src/main/res/layout/fragment_companies_search.xml" value="0.24003623188405798" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/fragment_album.xml" value="0.22554347826086957" />
-        <entry key="app/src/main/res/layout/fragment_album_list.xml" value="0.33816964285714285" />
+        <entry key="app/src/main/res/layout/fragment_album_list.xml" value="0.3006942749023438" />
         <entry key="app/src/main/res/layout/fragment_albums.xml" value="0.13854166666666667" />
         <entry key="app/src/main/res/layout/fragment_company.xml" value="0.182518115942029" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/fragment_company_search.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/fragment_photo_picker.xml" value="0.2798913043478261" />
         <entry key="app/src/main/res/layout/fragment_review.xml" value="0.13854166666666667" />
-        <entry key="app/src/main/res/layout/item_album.xml" value="1.0" />
+        <entry key="app/src/main/res/layout/item_album.xml" value="0.41056533827618164" />
         <entry key="app/src/main/res/layout/item_company.xml" value="0.140625" />
         <entry key="app/src/main/res/layout/item_company_shimmer.xml" value="0.10208333333333333" />
         <entry key="app/src/main/res/layout/item_horizontal_theme.xml" value="0.30932971014492755" />
         <entry key="app/src/main/res/layout/item_horizontal_theme_cardview.xml" value="0.30932971014492755" />
+        <entry key="app/src/main/res/layout/item_overlay_resource.xml" value="0.21927083333333333" />
         <entry key="app/src/main/res/menu/menu_company.xml" value="0.3296875" />
         <entry key="app/src/main/res/menu/menu_review.xml" value="0.3296875" />
       </map>

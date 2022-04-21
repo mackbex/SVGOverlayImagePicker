@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View" />
+        <import type="com.picker.overlay.util.Resource" />
         <variable
             name="listAdapter"
             type="com.picker.overlay.ui.picker.album.list.AlbumListAdapter" />
-
         <variable
             name="viewModel"
             type="com.picker.overlay.ui.picker.album.list.AlbumListViewModel" />
-
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,10 +22,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_album"
-            app:items="@{viewModel.albumListState}"
-            app:listAdapter="@{listAdapter}"
             app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/dark_green_2"
+            android:visibility="@{viewModel.albumListState instanceof Resource.Loading ? View.VISIBLE : View.GONE }"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
