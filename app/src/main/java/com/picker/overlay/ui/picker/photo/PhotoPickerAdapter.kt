@@ -1,6 +1,7 @@
 package com.picker.overlay.ui.picker.photo
 
 import android.content.res.Resources
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.picker.overlay.R
 import com.picker.overlay.databinding.ItemPhotoBinding
 import com.picker.overlay.domain.model.Album
+import com.picker.overlay.domain.model.Photo
 
 
-class PhotoPickerAdapter : ListAdapter<String, PhotoPickerAdapter.ViewHolder>(
+class PhotoPickerAdapter : ListAdapter<Photo, PhotoPickerAdapter.ViewHolder>(
     ItemDiffCallback()
 ) {
-    private var listener: ((item:String, binding: ViewDataBinding) -> Unit)? = null
+    private var listener: ((photo:Photo, binding: ViewDataBinding) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(DataBindingUtil.inflate(
@@ -31,29 +33,30 @@ class PhotoPickerAdapter : ListAdapter<String, PhotoPickerAdapter.ViewHolder>(
         holder.bind(getItem(position))
     }
 
-    fun setPostInterface(listener: ((item: String, binding:ViewDataBinding) -> Unit)?) {
+    fun setPostInterface(listener: ((photo: Photo, binding:ViewDataBinding) -> Unit)?) {
         this.listener = listener
     }
 
     inner class ViewHolder(private val binding: ViewDataBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item:String) {
-            listener?.invoke(item, binding)
+        fun bind(photo:Photo) {
+            binding.setVariable(BR.model, photo)
+            listener?.invoke(photo, binding)
             binding.executePendingBindings()
         }
     }
 
-    private class ItemDiffCallback : DiffUtil.ItemCallback<String>() {
+    private class ItemDiffCallback : DiffUtil.ItemCallback<Photo>() {
         override fun areItemsTheSame(
-            oldItem: String,
-            newItem: String
+            oldItem: Photo,
+            newItem: Photo
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: String,
-            newItem: String
+            oldItem: Photo,
+            newItem: Photo
         ): Boolean {
             return oldItem == newItem
         }

@@ -3,10 +3,8 @@ package com.picker.overlay.data.repository
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import com.picker.overlay.di.AppModule
 import com.picker.overlay.domain.model.Album
 import com.picker.overlay.domain.model.PhotoAlbum
@@ -23,21 +21,16 @@ class MediaRepositoryImpl @Inject constructor(
     @AppModule.IODispatcher private val defaultDispatcher: CoroutineDispatcher
 ): MediaRepository {
 
-
     override suspend fun getAlbumList() = withContext(defaultDispatcher) {
 
         val albums = HashMap<String, Album>()
-
         val projection = arrayOf(
             MediaStore.Images.ImageColumns._ID,
             MediaStore.Images.ImageColumns.DISPLAY_NAME,
             MediaStore.Images.ImageColumns.DATE_MODIFIED,
             MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
-            MediaStore.Images.ImageColumns.RELATIVE_PATH,
             MediaStore.MediaColumns.SIZE
-
         )
-
         val query = Bundle().apply {
             putStringArray(
                 ContentResolver.QUERY_ARG_SORT_COLUMNS,
@@ -46,6 +39,19 @@ class MediaRepositoryImpl @Inject constructor(
             putInt(
                 ContentResolver.QUERY_ARG_SORT_DIRECTION,
                 ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
+            )
+            // jpg, png만 로드
+            val selection =
+                "${MediaStore.Files.FileColumns.MIME_TYPE } = ? OR ${MediaStore.Files.FileColumns.MIME_TYPE } = ? OR ${MediaStore.Files.FileColumns.MIME_TYPE } = ?"
+            val selectionArgs = arrayOf("image/jpeg", "image/png", "image/jpg")
+
+            putString(
+                ContentResolver.QUERY_ARG_SQL_SELECTION,
+                selection
+            )
+            putStringArray(
+                ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS,
+                selectionArgs
             )
         }
         val res = context.contentResolver.query(
@@ -61,7 +67,6 @@ class MediaRepositoryImpl @Inject constructor(
                     val id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns._ID))
                     val name = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DISPLAY_NAME))
                     val date = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATE_MODIFIED))
-                    val path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.RELATIVE_PATH))
                     val bucket = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME))
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.SIZE)) ?: continue
 

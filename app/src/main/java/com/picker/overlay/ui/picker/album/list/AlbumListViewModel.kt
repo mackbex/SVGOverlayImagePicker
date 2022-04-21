@@ -15,8 +15,10 @@ import javax.inject.Inject
 class AlbumListViewModel @Inject constructor(
     private val mediaUseCase: MediaUseCase
 ):ViewModel() {
-    val albumListState = MutableStateFlow<Resource<Map<String, Album>>>(Resource.Loading)
+    val albumListState = MutableStateFlow<Resource<Map<String, Album>>>(Resource.Init)
 
-    fun getAlbumList() = viewModelScope.launch { albumListState.value = mediaUseCase.getAlbumList() }
+    fun getAlbumList() = viewModelScope.launch {
+        albumListState.value = mediaUseCase.getAlbumList()
+    }
 
 }

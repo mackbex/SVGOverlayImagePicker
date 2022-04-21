@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.picker.overlay.domain.model.Album" />
+            type="com.picker.overlay.domain.model.Photo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,8 @@
             android:id="@+id/img_theme"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@color/dark_green_1"
+            app:photo="@{model}"
+            android:scaleType="centerCrop"
             tools:src="@color/dark_green_1"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"

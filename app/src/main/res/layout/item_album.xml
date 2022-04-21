@@ -40,7 +40,7 @@
                         android:id="@+id/img_theme"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:albumImage="@{model}"
+                        app:albumCover="@{model}"
                         android:scaleType="centerCrop"
                         tools:src="@color/dark_green_1"
                         />

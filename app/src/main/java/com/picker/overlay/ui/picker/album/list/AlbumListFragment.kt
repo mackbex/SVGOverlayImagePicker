@@ -1,11 +1,15 @@
 package com.picker.overlay.ui.picker.album.list
 
 import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -61,17 +65,16 @@ class AlbumListFragment : Fragment() {
         }
 
         initStates()
+
+        sharedViewModel.checkStorageAccessPermission(this@AlbumListFragment, {
+            viewModel.albumListState.value = Resource.Loading
+            viewModel.getAlbumList()
+        }, {
+//            Snackbar.make(binding.root, getString(R.string.msg_storage_permission_denied), Snackbar.LENGTH_SHORT).show()
+        })
     }
 
-    override fun onResume() {
-        super.onResume()
-        if(!sharedViewModel.permissionGranted) {
-            sharedViewModel.requestPermission(requireActivity())
-        }
-        else {
-            viewModel.getAlbumList()
-        }
-    }
+
 
     private fun initStates() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -80,7 +83,12 @@ class AlbumListFragment : Fragment() {
                     viewModel.albumListState.collect {
                         when(it) {
                             is Resource.Success -> {
-                                (binding.rcAlbumList.adapter as AlbumListAdapter).submitList(it.data.values.toList())
+                                if(it.data.isEmpty()) {
+                                    Snackbar.make(binding.root, getString(R.string.msg_no_image_found), Snackbar.LENGTH_SHORT).show()
+                                }
+                                else {
+                                    (binding.rcAlbumList.adapter as AlbumListAdapter).submitList(it.data.values.toList())
+                                }
                             }
                             is Resource.Failure -> {
                                 Snackbar.make(binding.rcAlbumList, getString(
@@ -92,6 +100,4 @@ class AlbumListFragment : Fragment() {
             }
         }
     }
-
-
 }

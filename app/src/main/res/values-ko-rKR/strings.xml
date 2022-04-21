@@ -18,4 +18,6 @@
     <string name="title_tab_my_albums">내 앨범</string>
     <string name="btn_overlay">오버레이</string>
     <string name="desc_album_size">%s Items</string>
+    <string name="msg_no_image_found">저장된 이미지가 없습니다.</string>
+    <string name="msg_storage_permission_denied">저장소 접근 권한이 없습니다.</string>
 </resources>

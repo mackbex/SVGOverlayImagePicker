@@ -17,4 +17,6 @@
     <string name="title_tab_my_albums">My Albums</string>
     <string name="btn_overlay">Overlay</string>
     <string name="desc_album_size">%s Items</string>
+    <string name="msg_no_image_found">No images are found.</string>
+    <string name="msg_storage_permission_denied">Storage permission denied.</string>
 </resources>
