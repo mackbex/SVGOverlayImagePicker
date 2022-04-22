@@ -1,15 +1,9 @@
 package com.picker.overlay.ui.picker.album.list
 
-import android.Manifest
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,13 +15,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.R
 import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentAlbumListBinding
-import com.picker.overlay.databinding.ItemAlbumBinding
 import com.picker.overlay.domain.model.PhotoAlbum
 import com.picker.overlay.ui.picker.album.AlbumsFragmentDirections
 import com.picker.overlay.util.Resource
 import com.picker.overlay.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -56,7 +48,11 @@ class AlbumListFragment : Fragment() {
                     when (item) {
                         is PhotoAlbum -> {
                             binding.root.setOnClickListener {
-                                findNavController().navigate(AlbumsFragmentDirections.actionAlbumListFragmentToPhotoPickerFragment(item))
+                                findNavController().navigate(
+                                    AlbumsFragmentDirections.actionAlbumListFragmentToPhotoPickerFragment(
+                                        item
+                                    )
+                                )
                             }
                         }
                     }
@@ -64,20 +60,19 @@ class AlbumListFragment : Fragment() {
             }
         }
 
-        initStates()
-
-        sharedViewModel.checkStorageAccessPermission(this@AlbumListFragment, {
-            viewModel.albumListState.value = Resource.Loading
+        sharedViewModel.checkStorageAccessPermission(this@AlbumListFragment, sharedViewModel.REQUIRED_STORAGE_PERMISSIONS, {
+            //파일 접근 권한이 주어졌을 때 collect 시작
+            initStates()
+            //stateIn 대신 수동으로 호출하는 이유 : Databinding으로 visibility 등 연결이 되어있기 때문에, 권한 획득 여부에 대한 분기를 stateflow 하나로 처리하기 위해 사용.
             viewModel.getAlbumList()
         }, {
-//            Snackbar.make(binding.root, getString(R.string.msg_storage_permission_denied), Snackbar.LENGTH_SHORT).show()
+            //반대의 경우, Failure
+            viewModel.albumListState.value = Resource.Failure(getString(R.string.msg_storage_permission_denied))
         })
     }
 
-
-
     private fun initStates() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.albumListState.collect {
@@ -91,8 +86,7 @@ class AlbumListFragment : Fragment() {
                                 }
                             }
                             is Resource.Failure -> {
-                                Snackbar.make(binding.rcAlbumList, getString(
-                                    R.string.err_failed_load_data), Snackbar.LENGTH_SHORT).show()
+                                Snackbar.make(binding.rcAlbumList, it.msg, Snackbar.LENGTH_SHORT).show()
                             }
                         }
                     }

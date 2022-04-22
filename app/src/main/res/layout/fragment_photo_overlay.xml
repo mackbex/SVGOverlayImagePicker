@@ -86,12 +86,14 @@
                         style="@style/Button.Overlay"
                         app:cornerRadius="20dp"
                         android:insetTop="0dp"
+                        app:rippleColor="@color/white"
                         android:insetBottom="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="19dp"
                         android:layout_marginBottom="14dp"
                         android:text="@string/btn_overlay"
+                        android:onClick="@{() -> viewModel.overlayImage(context, model, imgSvg)}"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
@@ -103,30 +105,57 @@
             android:theme="@style/Theme.Layout.BG"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/img_original"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:src="@color/dark_green_1"
-                app:layout_constraintBottom_toTopOf="@+id/rc_overlay_list"
+                app:overlayTarget="@{model}"
+                tools:src="@color/dark_green_1"
+                app:layout_constraintBottom_toTopOf="@+id/layout_overlay_list"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_overlay_list"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_svg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/overlay_resource_margin"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toTopOf="@id/img_original"
+                app:layout_constraintStart_toStartOf="@id/img_original"
+                app:layout_constraintEnd_toEndOf="@id/img_original"
+                app:layout_constraintBottom_toBottomOf="@id/img_original"
+                tools:src="@color/beige_2"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_overlay_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
-                android:layout_marginBottom="29dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="@dimen/list_overlay_resource_height"
+                android:background="@color/white"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img_original"
-                app:resourceItems="@{viewModel.overlayResourceListState}"
-                tools:listitem="@layout/item_overlay_resource" />
+                >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_overlay_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/overlay_resource_margin_top"
+                android:layout_marginBottom="@dimen/overlay_resource_margin_bottom"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:resourceItems="@{viewModel.overlayResourcesState}"
+                tools:listitem="@layout/item_overlay_resource"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

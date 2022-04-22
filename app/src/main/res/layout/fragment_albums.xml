@@ -22,16 +22,6 @@
             android:theme="@style/Theme.SVGOverlayImagePicker.AppBarOverlay"
             app:elevation="0dp">
 
-<!--            <com.google.android.material.appbar.MaterialToolbar-->
-<!--                android:id="@+id/toolbar"-->
-<!--                style="@style/Widget.MaterialComponents.ActionBar.Primary"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/toolbar_height"-->
-<!--                app:contentInsetStart="@dimen/toolbar_title_inset_start"-->
-<!--                app:title="@string/title_album_list"-->
-<!--                app:titleMarginTop="@dimen/toolbar_title_margin_top"-->
-<!--                app:titleTextAppearance="@style/Toolbar.TitleText"-->
-<!--                app:titleTextColor="?attr/colorOnPrimary" />-->
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
@@ -49,7 +39,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/Toolbar.TitleText"
+                    android:textAppearance="@style/Toolbar.TitleText.Main"
                     android:text="@string/title_album_list"
                     tools:text="Album List"
                     app:layout_constraintTop_toTopOf="parent"

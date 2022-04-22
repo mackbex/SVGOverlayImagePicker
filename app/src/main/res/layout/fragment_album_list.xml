@@ -11,11 +11,14 @@
         <variable
             name="viewModel"
             type="com.picker.overlay.ui.picker.album.list.AlbumListViewModel" />
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:theme="@style/Theme.Layout.BG">
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_album_list"
@@ -35,6 +38,18 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/dark_green_2"
             android:visibility="@{viewModel.albumListState instanceof Resource.Loading ? View.VISIBLE : View.GONE }"
+            />
+
+        <TextView
+            android:id="@+id/tv_failure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.albumListState instanceof Resource.Failure ? ((com.picker.overlay.util.Resource.Failure)viewModel.albumListState).msg : ``}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{viewModel.albumListState instanceof Resource.Failure ? View.VISIBLE : View.GONE}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

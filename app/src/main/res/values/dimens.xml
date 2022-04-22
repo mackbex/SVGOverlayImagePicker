@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="list_item_cell_margin">20dp</dimen>
-    <dimen name="item_rate_margin_start">6dp</dimen>
-    <dimen name="item_rate_margin_end">10dp</dimen>
-    <dimen name="list_item_height">100dp</dimen>
-    <dimen name="item_industry_margin">10dp</dimen>
-    <dimen name="list_item_cardview_width">170dp</dimen>
-    <dimen name="list_item_cardview_height">219dp</dimen>
-    <dimen name="list_item_album_image_width">170dp</dimen>
-    <dimen name="list_item_album_image_height">170dp</dimen>
-    <dimen name="fragment_company_layout_padding">20dp</dimen>
-    <dimen name="fragment_review_layout_padding">20dp</dimen>
     <dimen name="toolbar_title_margin_top">39dp</dimen>
     <dimen name="toolbar_height">77dp</dimen>
     <dimen name="toolbar_title_inset">28dp</dimen>
     <dimen name="list_item_overlay_resource_width">80dp</dimen>
     <dimen name="list_item_overlay_resource_height">80dp</dimen>
+    <dimen name="list_overlay_resource_height">151dp</dimen>
+    <dimen name="overlay_resource_margin_top">42dp</dimen>
+    <dimen name="overlay_resource_margin_bottom">29dp</dimen>
+    <dimen name="overlay_resource_margin">60dp</dimen>
 </resources>

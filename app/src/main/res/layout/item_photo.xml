@@ -20,7 +20,7 @@
             android:id="@+id/img_theme"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:photo="@{model}"
+            app:thumbPhoto="@{model}"
             android:scaleType="centerCrop"
             tools:src="@color/dark_green_1"
             app:layout_constraintDimensionRatio="1"

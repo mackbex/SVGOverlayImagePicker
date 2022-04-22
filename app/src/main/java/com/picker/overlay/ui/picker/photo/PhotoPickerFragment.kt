@@ -1,7 +1,6 @@
 package com.picker.overlay.ui.picker.photo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.R
 import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentPhotoPickerBinding
-import com.picker.overlay.domain.model.Photo
-import com.picker.overlay.ui.picker.album.list.AlbumListAdapter
 import com.picker.overlay.util.Resource
 import com.picker.overlay.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,16 +57,14 @@ class PhotoPickerFragment: Fragment() {
             navBack.setOnClickListener {
                 findNavController().navigateUp()
             }
-
         }
 
-        initStates()
 
-        sharedViewModel.checkStorageAccessPermission(this@PhotoPickerFragment, {
-            viewModel.photoListState.value = Resource.Loading
+        sharedViewModel.checkStorageAccessPermission(this@PhotoPickerFragment, sharedViewModel.REQUIRED_STORAGE_PERMISSIONS, {
+            initStates()
             viewModel.getPhotoList(args.album)
         }, {
-//            Snackbar.make(binding.root, getString(R.string.msg_storage_permission_denied), Snackbar.LENGTH_SHORT).show()
+            findNavController().navigateUp()
         })
     }
 
@@ -88,8 +83,7 @@ class PhotoPickerFragment: Fragment() {
                                 }
                             }
                             is Resource.Failure -> {
-                                Snackbar.make(binding.rcPhotoList, getString(
-                                    R.string.err_failed_load_data), Snackbar.LENGTH_SHORT).show()
+                                Snackbar.make(binding.rcPhotoList, it.msg, Snackbar.LENGTH_SHORT).show()
                             }
                         }
                     }

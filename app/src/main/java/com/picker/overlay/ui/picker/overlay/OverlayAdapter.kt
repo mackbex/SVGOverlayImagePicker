@@ -1,6 +1,5 @@
 package com.picker.overlay.ui.picker.overlay
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,14 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.picker.overlay.R
-import com.picker.overlay.databinding.ItemPhotoBinding
-import com.picker.overlay.domain.model.Album
 
 
 class OverlayAdapter : ListAdapter<String, OverlayAdapter.ViewHolder>(
     ItemDiffCallback()
 ) {
-    private var listener: ((item:String, binding: ViewDataBinding) -> Unit)? = null
+    private var listener: ((path:String, binding: ViewDataBinding) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(DataBindingUtil.inflate(
@@ -31,14 +28,15 @@ class OverlayAdapter : ListAdapter<String, OverlayAdapter.ViewHolder>(
         holder.bind(getItem(position))
     }
 
-    fun setPostInterface(listener: ((item: String, binding:ViewDataBinding) -> Unit)?) {
+    fun setPostInterface(listener: ((path: String, binding:ViewDataBinding) -> Unit)?) {
         this.listener = listener
     }
 
     inner class ViewHolder(private val binding: ViewDataBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item:String) {
-            listener?.invoke(item, binding)
+        fun bind(path:String) {
+            binding.setVariable(BR.path, path)
+            listener?.invoke(path, binding)
             binding.executePendingBindings()
         }
     }

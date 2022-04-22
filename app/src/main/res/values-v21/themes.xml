@@ -1,5 +1,5 @@
 <resources>
-    <style name="CompanySearch" parent="Theme.SVGOverlayImagePicker">
+    <style name="SVGOverlayImagePicker" parent="Theme.SVGOverlayImagePicker">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

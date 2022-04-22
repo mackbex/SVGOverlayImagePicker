@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CompanySearch</string>
-    <string name="title_search">검색</string>
-    <string name="title_review">리뷰</string>
-    <string name="appbar_action_search">검색</string>
+    <string name="app_name">SVG Overlay</string>
     <string name="err_failed_load_data">데이터 로드에 실패했습니다.</string>
-    <string name="hint_input_company">회사명을 입력하세요</string>
     <string name="title_album_list">앨범 리스트</string>
-    <string name="title_avg_salary">평균연봉</string>
-    <string name="title_unit_salary">만원</string>
-    <string name="title_interview_question">면접질문</string>
-    <string name="btn_more_company_info">기업정보 더보기</string>
-    <string name="price_format">%,2d</string>
-    <string name="title_pros">장점</string>
-    <string name="title_cons">단점</string>
     <string name="btn_more_review_info">기업리뷰 더보기</string>
     <string name="title_tab_my_albums">내 앨범</string>
     <string name="btn_overlay">오버레이</string>
     <string name="desc_album_size">%s Items</string>
     <string name="msg_no_image_found">저장된 이미지가 없습니다.</string>
     <string name="msg_storage_permission_denied">저장소 접근 권한이 없습니다.</string>
+    <string name="err_failed_load_albums">앨범 로드에 실패했습니다.</string>
+    <string name="err_failed_to_load_overlay_resources">"오버레이 리소스 로드에 실패했습니다. "</string>
+    <string name="err_failed_overlay_image">이미지 오버레이에 실패했습니다.</string>
 </resources>

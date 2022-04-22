@@ -1,7 +1,5 @@
 package com.picker.overlay.ui.picker.photo
 
-import android.content.res.Resources
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -11,8 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.picker.overlay.R
-import com.picker.overlay.databinding.ItemPhotoBinding
-import com.picker.overlay.domain.model.Album
 import com.picker.overlay.domain.model.Photo
 
 

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View" />
+        <variable
+            name="path"
+            type="java.lang.String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +22,7 @@
             android:id="@+id/img_overlay_resource"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@color/dark_green_1"
+            app:svgResource="@{path}"
             tools:src="@color/dark_green_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

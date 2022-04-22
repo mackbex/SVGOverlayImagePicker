@@ -16,8 +16,16 @@ object AppModule {
     @Retention(AnnotationRetention.BINARY)
     annotation class IODispatcher
 
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class MainDispatcher
 
-    @IODispatcher
     @Provides
+    @IODispatcher
     fun provideIoDispatcher() = Dispatchers.IO
+
+
+    @Provides
+    @MainDispatcher
+    fun provideMainDispatcher() = Dispatchers.Main
 }
