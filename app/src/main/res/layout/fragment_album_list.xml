@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View" />
-        <import type="com.picker.overlay.util.Resource" />
+        <import type="com.picker.overlay.util.wrapper.Resource" />
         <variable
             name="listAdapter"
             type="com.picker.overlay.ui.picker.album.list.AlbumListAdapter" />
@@ -16,9 +16,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@style/Theme.Layout.BG">
-
-
+        android:theme="@style/Theme.Layout.BG"
+        android:paddingVertical="@dimen/album_list_padding_vertical"
+        android:paddingHorizontal="@dimen/album_list_padding_horizontal"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_album_list"
@@ -44,7 +45,7 @@
             android:id="@+id/tv_failure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.albumListState instanceof Resource.Failure ? ((com.picker.overlay.util.Resource.Failure)viewModel.albumListState).msg : ``}"
+            android:text="@{viewModel.albumListState instanceof Resource.Failure ? ((com.picker.overlay.util.wrapper.Resource.Failure)viewModel.albumListState).msg : ``}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

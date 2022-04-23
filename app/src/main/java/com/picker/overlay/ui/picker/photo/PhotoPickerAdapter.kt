@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.picker.overlay.R
+import com.picker.overlay.domain.model.AlbumItem
 import com.picker.overlay.domain.model.Photo
 
 
-class PhotoPickerAdapter : ListAdapter<Photo, PhotoPickerAdapter.ViewHolder>(
+class PhotoPickerAdapter : ListAdapter<AlbumItem, PhotoPickerAdapter.ViewHolder>(
     ItemDiffCallback()
 ) {
-    private var listener: ((photo:Photo, binding: ViewDataBinding) -> Unit)? = null
+    private var listener: ((item:AlbumItem, binding: ViewDataBinding) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(DataBindingUtil.inflate(
@@ -29,32 +30,32 @@ class PhotoPickerAdapter : ListAdapter<Photo, PhotoPickerAdapter.ViewHolder>(
         holder.bind(getItem(position))
     }
 
-    fun setPostInterface(listener: ((photo: Photo, binding:ViewDataBinding) -> Unit)?) {
+    fun setPostInterface(listener: ((item: AlbumItem, binding:ViewDataBinding) -> Unit)?) {
         this.listener = listener
     }
 
     inner class ViewHolder(private val binding: ViewDataBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(photo:Photo) {
-            binding.setVariable(BR.model, photo)
-            listener?.invoke(photo, binding)
+        fun bind(item:AlbumItem) {
+            binding.setVariable(BR.model, item)
+            listener?.invoke(item, binding)
             binding.executePendingBindings()
         }
     }
 
-    private class ItemDiffCallback : DiffUtil.ItemCallback<Photo>() {
+    private class ItemDiffCallback : DiffUtil.ItemCallback<AlbumItem>() {
         override fun areItemsTheSame(
-            oldItem: Photo,
-            newItem: Photo
+            oldItem: AlbumItem,
+            newItem: AlbumItem
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: Photo,
-            newItem: Photo
+            oldItem: AlbumItem,
+            newItem: AlbumItem
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.uri == newItem.uri
         }
     }
 }

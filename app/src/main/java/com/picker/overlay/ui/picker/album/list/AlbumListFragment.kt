@@ -17,7 +17,7 @@ import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentAlbumListBinding
 import com.picker.overlay.domain.model.PhotoAlbum
 import com.picker.overlay.ui.picker.album.AlbumsFragmentDirections
-import com.picker.overlay.util.Resource
+import com.picker.overlay.util.wrapper.Resource
 import com.picker.overlay.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

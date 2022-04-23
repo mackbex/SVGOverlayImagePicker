@@ -3,6 +3,7 @@ package com.picker.overlay.util.ext
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PictureDrawable
+import android.net.Uri
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -28,7 +29,7 @@ fun bindAlbumCover(imageView: ImageView, model: Album?) {
     circularProgressDrawable.start()
 
     Glide.with(imageView.context)
-        .load(model?.list?.get(0))
+        .load(model?.list?.get(0)?.uri)
         .sizeMultiplier(0.7f)
         .fitCenter()
 //        .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -105,8 +106,8 @@ fun bindThumbPhoto(imageView: ImageView, model: Photo?) {
     circularProgressDrawable.start()
 
     Glide.with(imageView.context)
-        .load(model?.uri)
-        .sizeMultiplier(0.8f)
+        .load(Uri.parse(model?.uri))
+        .sizeMultiplier(0.7f)
         .fitCenter()
 //        .diskCacheStrategy(DiskCacheStrategy.NONE)
 //        .skipMemoryCache(true)

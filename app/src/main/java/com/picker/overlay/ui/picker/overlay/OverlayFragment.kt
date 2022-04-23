@@ -17,9 +17,10 @@ import com.caverock.androidsvg.SVG
 import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentPhotoOverlayBinding
-import com.picker.overlay.util.OverlayResult
-import com.picker.overlay.util.Resource
+import com.picker.overlay.util.wrapper.OverlayResult
+import com.picker.overlay.util.wrapper.Resource
 import com.picker.overlay.util.autoCleared
+import com.picker.overlay.util.deco.ResourceListDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -46,12 +47,22 @@ class OverlayFragment:Fragment() {
             model = args.photo
             lifecycleOwner = viewLifecycleOwner
 
-            rcOverlayList.adapter = OverlayAdapter().apply {
-                setPostInterface { item, binding ->
-                    binding.root.setOnClickListener {
-                        imgSvg.setImageDrawable(PictureDrawable(SVG.getFromAsset(requireContext().assets, item).renderToPicture()))
+            rcOverlayList.apply {
+                adapter = OverlayAdapter().apply {
+                    setPostInterface { item, binding ->
+                        binding.root.setOnClickListener {
+                            //이미지보다 리소스 크기가 클 경우, 최대 크기를 이미지 크기로 변경.
+                            if(imgSvg.measuredWidth > imgOriginal.drawable.intrinsicWidth || imgSvg.measuredHeight > imgOriginal.drawable.intrinsicHeight) {
+                                val modifiedSize = if(imgOriginal.drawable.intrinsicWidth > imgOriginal.drawable.intrinsicHeight) imgOriginal.drawable.intrinsicHeight else imgOriginal.drawable.intrinsicWidth
+                                imgSvg.layoutParams.width = modifiedSize
+                                imgSvg.layoutParams.height = modifiedSize
+                            }
+                            imgSvg.setImageDrawable(PictureDrawable(SVG.getFromAsset(requireContext().assets, item).renderToPicture()))
+                            imgSvg.tag = item
+                        }
                     }
                 }
+                addItemDecoration(ResourceListDecoration(requireContext()))
             }
 
             navBack.setOnClickListener {
@@ -86,7 +97,7 @@ class OverlayFragment:Fragment() {
                                 Snackbar.make(binding.rcOverlayList, it.msg, Snackbar.LENGTH_SHORT).show()
                             }
                             is OverlayResult.Success -> {
-                                findNavController().navigateUp()
+                                findNavController().navigate(OverlayFragmentDirections.actionOverlayFragmentToAlbumListFragment())
                             }
                         }
                     }

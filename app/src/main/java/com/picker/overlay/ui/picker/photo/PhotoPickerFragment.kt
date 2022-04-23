@@ -16,7 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.R
 import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentPhotoPickerBinding
-import com.picker.overlay.util.Resource
+import com.picker.overlay.domain.model.Photo
+import com.picker.overlay.util.wrapper.Resource
 import com.picker.overlay.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,13 +44,22 @@ class PhotoPickerFragment: Fragment() {
             model = args.album
             lifecycleOwner = viewLifecycleOwner
 
-            rcPhotoList.adapter = PhotoPickerAdapter().apply {
-                listAdapter = this
-                setPostInterface { item, binding ->
-                    binding.root.setOnClickListener {
-                        findNavController().navigate(PhotoPickerFragmentDirections.actionPhotoPickerFragmentToOverlayFragment(
-                            item
-                        ))
+            rcPhotoList.apply {
+                adapter = PhotoPickerAdapter().apply {
+                    listAdapter = this
+                    setPostInterface { item, binding ->
+                        binding.root.setOnClickListener {
+                            when(item) {
+                                is Photo -> {
+                                    findNavController().navigate(PhotoPickerFragmentDirections.actionPhotoPickerFragmentToOverlayFragment(
+                                        item
+                                    ))
+                                }
+                                else -> {
+                                    Snackbar.make(binding.root, getString(R.string.err_no_overlay_target), Snackbar.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
                     }
                 }
             }

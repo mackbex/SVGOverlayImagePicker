@@ -1,6 +1,6 @@
 package com.picker.overlay.domain.model
 
-interface Album {
+ interface Album {
     val title:String
-    val list:MutableList<String>
+    val list:MutableList<AlbumItem>
 }

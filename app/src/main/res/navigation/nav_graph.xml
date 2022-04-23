@@ -45,5 +45,11 @@
         <argument
             android:name="photo"
             app:argType="com.picker.overlay.domain.model.Photo" />
+        <action
+            android:id="@+id/action_overlayFragment_to_albumListFragment"
+            app:destination="@id/albumListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

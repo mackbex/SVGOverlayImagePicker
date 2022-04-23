@@ -12,4 +12,6 @@
     <string name="err_failed_load_albums">앨범 로드에 실패했습니다.</string>
     <string name="err_failed_to_load_overlay_resources">"오버레이 리소스 로드에 실패했습니다. "</string>
     <string name="err_failed_overlay_image">이미지 오버레이에 실패했습니다.</string>
+    <string name="msg_choose_svg_resource">오버레이할 아이콘을 선택하세요.</string>
+    <string name="err_no_overlay_target">오버레이 대상이 아닙니다.</string>
 </resources>

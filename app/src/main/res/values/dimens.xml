@@ -3,10 +3,19 @@
     <dimen name="toolbar_title_margin_top">39dp</dimen>
     <dimen name="toolbar_height">77dp</dimen>
     <dimen name="toolbar_title_inset">28dp</dimen>
+    <dimen name="album_list_padding_vertical">12dp</dimen>
+    <dimen name="album_list_padding_horizontal">2dp</dimen>
     <dimen name="list_item_overlay_resource_width">80dp</dimen>
     <dimen name="list_item_overlay_resource_height">80dp</dimen>
+    <dimen name="list_item_album_padding">4dp</dimen>
     <dimen name="list_overlay_resource_height">151dp</dimen>
+    <dimen name="list_overlay_resource_edge_margin">40dp</dimen>
+    <dimen name="list_overlay_resource_padding">12dp</dimen>
+    <dimen name="list_overlay_resource_inner_margin">8dp</dimen>
     <dimen name="overlay_resource_margin_top">42dp</dimen>
     <dimen name="overlay_resource_margin_bottom">29dp</dimen>
     <dimen name="overlay_resource_margin">60dp</dimen>
+    <dimen name="list_item_photopicker_padding">1dp</dimen>
+    <dimen name="photopicker_padding_vertical">15dp</dimen>
+
 </resources>

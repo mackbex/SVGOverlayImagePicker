@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picker.overlay.domain.model.Album
 import com.picker.overlay.domain.usecase.LoadingAlbumUseCase
-import com.picker.overlay.util.Resource
+import com.picker.overlay.util.wrapper.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

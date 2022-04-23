@@ -15,7 +15,6 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginEnd="4dp"
         >
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -23,11 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:svgResource="@{path}"
+            app:contentPadding="@dimen/list_overlay_resource_padding"
             tools:src="@color/dark_green_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/black"
+            android:background="@color/white"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

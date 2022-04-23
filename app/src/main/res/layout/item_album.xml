@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/list_item_album_padding"
         >
 
         <com.google.android.material.card.MaterialCardView

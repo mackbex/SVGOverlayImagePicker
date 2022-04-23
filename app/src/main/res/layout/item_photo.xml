@@ -23,6 +23,7 @@
             app:thumbPhoto="@{model}"
             android:scaleType="centerCrop"
             tools:src="@color/dark_green_1"
+            android:padding="@dimen/list_item_photopicker_padding"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

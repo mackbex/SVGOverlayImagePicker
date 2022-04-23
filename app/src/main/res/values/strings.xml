@@ -11,4 +11,6 @@
     <string name="err_failed_load_data">Failed load data.</string>
     <string name="title_album_list">Album list</string>
     <string name="err_failed_overlay_image">Failed to overlay images</string>
+    <string name="msg_choose_svg_resource">Select icon to overlay.</string>
+    <string name="err_no_overlay_target">Invalid overlay target.</string>
 </resources>

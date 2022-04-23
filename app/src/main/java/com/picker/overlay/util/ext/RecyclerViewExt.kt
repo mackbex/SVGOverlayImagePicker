@@ -4,7 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.R
-import com.picker.overlay.util.Resource
+import com.picker.overlay.util.wrapper.Resource
 import com.picker.overlay.ui.picker.overlay.OverlayAdapter
 
 

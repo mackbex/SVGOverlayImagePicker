@@ -17,6 +17,7 @@
         <activity
             android:name="com.picker.overlay.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.SVGOverlayImagePicker.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

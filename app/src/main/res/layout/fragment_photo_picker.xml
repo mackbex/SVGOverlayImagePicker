@@ -31,6 +31,7 @@
             app:elevation="5dp">
 
             <androidx.appcompat.widget.Toolbar
+                style="@style/ToolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
                 app:contentInsetEnd="0dp"
@@ -86,7 +87,11 @@
 
             android:layout_height="match_parent"
             android:theme="@style/Theme.Layout.BG"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingVertical="@dimen/photopicker_padding_vertical"
+            android:layout_marginStart="-1dp"
+            android:layout_marginEnd="-1dp"
+            >
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rc_photo_list"
@@ -96,8 +101,6 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:listAdapter="@{listAdapter}"
                 app:spanCount="3"
-                tools:layout_editor_absoluteX="43dp"
-                tools:layout_editor_absoluteY="350dp"
                 tools:listitem="@layout/item_photo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

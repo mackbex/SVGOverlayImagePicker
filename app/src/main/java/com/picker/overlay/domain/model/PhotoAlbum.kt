@@ -4,5 +4,5 @@ import java.io.Serializable
 
 data class PhotoAlbum(
     override val title:String,
-    override val list:MutableList<String>
+    override val list:MutableList<AlbumItem>
 ):Album, Serializable

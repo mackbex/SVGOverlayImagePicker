@@ -23,6 +23,7 @@
             app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
+                style="@style/ToolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
                 app:contentInsetEnd="0dp"

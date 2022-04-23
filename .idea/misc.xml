@@ -10,7 +10,7 @@
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.273" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/activity_main.xml" value="0.3067708333333333" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/fragment_album_list.xml" value="0.30625" />
-        <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/fragment_albums.xml" value="0.5" />
+        <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/fragment_albums.xml" value="0.25" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/fragment_company.xml" value="0.3677536231884058" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/fragment_company_search.xml" value="0.30625" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/fragment_overlay.xml" value="0.25138948268490807" />
@@ -22,7 +22,7 @@
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/item_company_shimmer.xml" value="0.30625" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/item_horizontal_theme.xml" value="0.35208333333333336" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/item_horizontal_theme_cardview.xml" value="0.35208333333333336" />
-        <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/item_overlay_resource.xml" value="0.6096807415036045" />
+        <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/item_overlay_resource.xml" value="0.75" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/item_photo.xml" value="0.30625" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/item_review.xml" value="0.30625" />
         <entry key="..\:/Android/SVGOverlayImagePicker/app/src/main/res/layout/view_progress.xml" value="0.4510474561778538" />
