@@ -1,7 +1,6 @@
 package com.picker.overlay.ui.picker.album.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +14,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.picker.overlay.R
-import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentAlbumListBinding
 import com.picker.overlay.domain.model.PhotoAlbum
 import com.picker.overlay.ui.picker.album.AlbumsFragmentDirections
+import com.picker.overlay.util.RequiredPermissions
 import com.picker.overlay.util.wrapper.Resource
 import com.picker.overlay.util.autoCleared
+import com.picker.overlay.util.isPermissionGranted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+/**
+ * 메인 뷰의 tab layout 안 viewpager 내부 fragment
+ */
 @AndroidEntryPoint
 class AlbumListFragment : Fragment() {
     private var binding: FragmentAlbumListBinding by autoCleared()
     private val viewModel: AlbumListViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,6 +47,7 @@ class AlbumListFragment : Fragment() {
 
             rcAlbumList.adapter = AlbumListAdapter().apply {
                 listAdapter = this
+                //아이템 클릭시의 이벤트 처리
                 setPostInterface { item, binding ->
                     when (item) {
                         is PhotoAlbum -> {
@@ -61,19 +64,20 @@ class AlbumListFragment : Fragment() {
             }
         }
 
-
         initStates()
-
-        requestStoragePermission.launch(sharedViewModel.REQUIRED_STORAGE_PERMISSIONS)
+        requestStoragePermission.launch(RequiredPermissions.STORAGE_PERMISSIONS)
     }
 
     override fun onResume() {
         super.onResume()
-        if(sharedViewModel.isPermissionGranted(requireContext(), sharedViewModel.REQUIRED_STORAGE_PERMISSIONS)) {
+        if(isPermissionGranted(requireContext(), RequiredPermissions.STORAGE_PERMISSIONS)) {
             viewModel.getAlbumList()
         }
     }
 
+    /**
+     * 파일 관련 권한 체크.
+     */
     private val requestStoragePermission = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val requiredList = mutableListOf<String>()
         permissions.entries.forEach {
@@ -88,6 +92,9 @@ class AlbumListFragment : Fragment() {
         }
     }
 
+    /**
+     * state collector 선언
+     */
     private fun initStates() {
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -96,7 +103,6 @@ class AlbumListFragment : Fragment() {
                         when(it) {
                             is Resource.Success -> {
                                 if(it.data.isEmpty()) {
-
                                     Toast.makeText(requireContext(), getString(R.string.msg_no_image_found), Toast.LENGTH_SHORT).show()
                                 }
                                 else {

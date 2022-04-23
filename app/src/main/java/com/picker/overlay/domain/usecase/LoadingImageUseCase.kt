@@ -3,7 +3,10 @@ package com.picker.overlay.domain.usecase
 import com.picker.overlay.domain.repository.MediaRepository
 import javax.inject.Inject
 
-class LoadingAlbumUseCase @Inject constructor(
+/**
+ * 이미지 로딩 관련 usecase.
+ */
+class LoadingImageUseCase @Inject constructor(
     private val mediaRepository: MediaRepository
 ) {
     suspend fun getAlbumList() = mediaRepository.getAlbumList()

@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.picker.overlay.ui.picker.album.list.AlbumListFragment
 
+/**
+ *  viewpager 어뎁터
+ */
 class AlbumsAdapter(fragment:Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
         return 1

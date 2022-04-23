@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.picker.overlay.R
 import com.picker.overlay.domain.model.OverlayInfo
 import com.picker.overlay.domain.model.Photo
-import com.picker.overlay.domain.usecase.LoadingAlbumUseCase
-import com.picker.overlay.domain.usecase.OverlayImagesUseCase
+import com.picker.overlay.domain.usecase.LoadingImageUseCase
+import com.picker.overlay.domain.usecase.SaveImageUseCase
 import com.picker.overlay.util.wrapper.OverlayResult
 import com.picker.overlay.util.wrapper.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,28 +18,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OverlayViewModel @Inject constructor(
-    private val loadingAlbumUseCase: LoadingAlbumUseCase,
-    private val overlayImagesUseCase: OverlayImagesUseCase
+    private val loadingImageUseCase: LoadingImageUseCase,
+    private val saveImagUseCase: SaveImageUseCase
 ):ViewModel() {
 
+    /**
+     * svg 리스트 data holder.
+     */
     val overlayResourcesState = MutableStateFlow<Resource<List<String>>>(Resource.Loading)
+
+    /**
+     * overlay 상태 data holder.
+     */
     val overlayImagesState = MutableStateFlow<OverlayResult>(OverlayResult.Init)
 
     fun getOverlayResources(assetPath:String) = viewModelScope.launch {
-        overlayResourcesState.value = loadingAlbumUseCase.getOverlayResources(assetPath)
+        overlayResourcesState.value = loadingImageUseCase.getOverlayResources(assetPath)
     }
 
+    /**
+     * overlay.
+     * 1. 리소스 선택 여부 체크 (선택 안했을 시, fail 리턴)
+     * 2.
+     */
     fun overlayImage(context:Context, photo: Photo, image:ImageView, resource:ImageView) {
         if(overlayImagesState.value is OverlayResult.Init) {
             if(resource.drawable == null) {
                 overlayImagesState.value = OverlayResult.Failure(context.getString(R.string.msg_choose_svg_resource))
-                overlayImagesState.value = OverlayResult.Init
             }
             else {
                 overlayImagesState.value = OverlayResult.InProgress
                 viewModelScope.launch {
 
-                    overlayImagesState.value = overlayImagesUseCase.overlayImages(OverlayInfo(
+                    overlayImagesState.value = saveImagUseCase.overlayImages(OverlayInfo(
                         photo,
                         image.drawable.intrinsicWidth,
                         image.drawable.intrinsicHeight,

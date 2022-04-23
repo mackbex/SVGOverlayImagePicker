@@ -13,7 +13,9 @@ import com.picker.overlay.R
 import com.picker.overlay.domain.model.*
 
 
-
+/**
+ * 앨범 리스트 어뎁터.
+ */
 class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(
     ItemDiffCallback()
 ) {
@@ -38,6 +40,9 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(
         }
     }
 
+    /**
+    * 버튼 클릭 등의 이벤트 처리를 부모 fragment에서 가시적으로 선언 및 처리 하기 위한 리스너 생성.
+     */
     fun setPostInterface(listener: ((item:Album,binding:ViewDataBinding) -> Unit)?) {
         this.listener = listener
     }
@@ -66,7 +71,7 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListAdapter.ViewHolder>(
             oldItem: Album,
             newItem: Album
         ): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem.list == newItem.list
         }
     }
 }

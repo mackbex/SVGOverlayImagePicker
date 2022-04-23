@@ -26,6 +26,10 @@ fun<ITEM,HOLDER : RecyclerView.ViewHolder?> bindItems(recyclerView: RecyclerView
     }
 }
 
+/**
+ * 리소스 리스트 adapter 아이템.
+ */
+
 @BindingAdapter("resourceItems")
 fun bindResourceItems(recyclerView: RecyclerView, items: Resource<List<String>>?) {
     val adapter = recyclerView.adapter as OverlayAdapter

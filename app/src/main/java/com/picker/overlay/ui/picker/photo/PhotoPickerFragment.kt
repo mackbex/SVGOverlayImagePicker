@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,9 +14,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.picker.overlay.R
-import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentPhotoPickerBinding
 import com.picker.overlay.domain.model.Photo
+import com.picker.overlay.util.RequiredPermissions
 import com.picker.overlay.util.wrapper.Resource
 import com.picker.overlay.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +26,6 @@ import kotlinx.coroutines.launch
 class PhotoPickerFragment: Fragment() {
     private var binding : FragmentPhotoPickerBinding by autoCleared()
     private val viewModel: PhotoPickerViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val args: PhotoPickerFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -71,9 +69,11 @@ class PhotoPickerFragment: Fragment() {
         }
 
         initStates()
-        requestStoragePermission.launch(sharedViewModel.REQUIRED_STORAGE_PERMISSIONS)
+        requestStoragePermission.launch(RequiredPermissions.STORAGE_PERMISSIONS)
     }
-
+    /**
+     * 파일 관련 권한 체크.
+     */
     private val requestStoragePermission = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val requiredList = mutableListOf<String>()
         permissions.entries.forEach {
@@ -84,6 +84,7 @@ class PhotoPickerFragment: Fragment() {
             viewModel.getPhotoList(args.album)
         }
         else {
+            //권한 없을 시, 뒤로이동 (뒤가 메인이기 때문에.)
             findNavController().navigateUp()
         }
     }

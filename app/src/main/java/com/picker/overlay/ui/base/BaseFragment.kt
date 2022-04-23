@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 
 
 /**
- * binding 처리 및 구조 base Fragment (사용안함
+ * binding 처리 및 구조 base Fragment (사용안함)
  */
 abstract class BaseFragment<V: ViewDataBinding>(
     private val inflate:(LayoutInflater, ViewGroup?, Boolean) -> V

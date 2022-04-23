@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.picker.overlay.R
 
-
+/**
+ * 오버레이 화면 안, SVG 리스트 어뎁터.
+ */
 class OverlayAdapter : ListAdapter<String, OverlayAdapter.ViewHolder>(
     ItemDiffCallback()
 ) {

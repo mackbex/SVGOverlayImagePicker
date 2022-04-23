@@ -6,5 +6,5 @@ data class OverlayInfo(
     val bgIntrinsicHeight:Int,
     val resourceMeasuredWidth:Int,
     val resourceMeasuredHeight:Int,
-    val resourceAssetPath:String
+    val resourceAssetPath:String? = null
 )

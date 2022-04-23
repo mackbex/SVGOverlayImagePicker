@@ -12,7 +12,9 @@ import com.picker.overlay.R
 import com.picker.overlay.domain.model.AlbumItem
 import com.picker.overlay.domain.model.Photo
 
-
+/**
+ * PhotoPicker 어뎁터.
+ */
 class PhotoPickerAdapter : ListAdapter<AlbumItem, PhotoPickerAdapter.ViewHolder>(
     ItemDiffCallback()
 ) {

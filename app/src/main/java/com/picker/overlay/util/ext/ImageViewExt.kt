@@ -16,21 +16,24 @@ import com.caverock.androidsvg.SVG
 import com.picker.overlay.R
 import com.picker.overlay.domain.model.Album
 import com.picker.overlay.domain.model.Photo
+import com.picker.overlay.util.getProgressbar
 
 
 /**
  * ImageView databinding Ext
  */
 
-
+/**
+ * 앨범 커버 리스트 adapter 아이템
+ */
 @BindingAdapter("albumCover")
 fun bindAlbumCover(imageView: ImageView, model: Album?) {
-    val circularProgressDrawable = DynamicView().getProgressbar(imageView.context)
+    val circularProgressDrawable = getProgressbar(imageView.context)
     circularProgressDrawable.start()
 
     Glide.with(imageView.context)
         .load(model?.list?.get(0)?.uri)
-        .sizeMultiplier(0.7f)
+        .sizeMultiplier(0.7f) //optimize를 위해 resolution 0.7정도로 설정.
         .fitCenter()
 //        .diskCacheStrategy(DiskCacheStrategy.NONE)
 //        .skipMemoryCache(true)
@@ -62,10 +65,12 @@ fun bindAlbumCover(imageView: ImageView, model: Album?) {
 }
 
 
-
+/**
+ * 오버레이 뷰 안, 오리지멀 이미지 adapter 아이템
+ */
 @BindingAdapter("overlayTarget")
 fun bindOverlayTarget(imageView: ImageView, model: Photo?) {
-    val circularProgressDrawable = DynamicView().getProgressbar(imageView.context)
+    val circularProgressDrawable = getProgressbar(imageView.context)
     circularProgressDrawable.start()
 
     Glide.with(imageView.context)
@@ -100,14 +105,18 @@ fun bindOverlayTarget(imageView: ImageView, model: Photo?) {
         .into(imageView)
 }
 
+/**
+ * PhotoPicker adapter 아이템
+ */
+
 @BindingAdapter("thumbPhoto")
 fun bindThumbPhoto(imageView: ImageView, model: Photo?) {
-    val circularProgressDrawable = DynamicView().getProgressbar(imageView.context)
+    val circularProgressDrawable = getProgressbar(imageView.context)
     circularProgressDrawable.start()
 
     Glide.with(imageView.context)
         .load(Uri.parse(model?.uri))
-        .sizeMultiplier(0.7f)
+        .sizeMultiplier(0.7f) //optimize를 위해 resolution 0.7정도로 설정.
         .fitCenter()
 //        .diskCacheStrategy(DiskCacheStrategy.NONE)
 //        .skipMemoryCache(true)
@@ -138,14 +147,17 @@ fun bindThumbPhoto(imageView: ImageView, model: Photo?) {
         .into(imageView)
 }
 
-
+/**
+ * 오버레이 뷰 안, svg resource 어뎁터 아이템.
+ */
 
 @BindingAdapter("svgResource")
 fun bindSvgResource(imageView: ImageView, path:String?) {
 
-    val circularProgressDrawable = DynamicView().getProgressbar(imageView.context)
+    val circularProgressDrawable = getProgressbar(imageView.context)
     circularProgressDrawable.start()
 
+    //svg 리소스 경로를 통해 PictureDrawable로 변환.
     val svgImg = path?.let {
         try {
             val svg = SVG.getFromAsset(imageView.context.assets, it)

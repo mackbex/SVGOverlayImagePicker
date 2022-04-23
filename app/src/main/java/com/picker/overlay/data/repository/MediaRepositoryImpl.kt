@@ -47,6 +47,13 @@ class MediaRepositoryImpl @Inject constructor(
     @AppModule.IODispatcher private val defaultDispatcher: CoroutineDispatcher
 ): MediaRepository {
 
+    /**
+     * 오버레이 작업
+     * 참고 : 내부 비트맵 스트림 저장 및 asset 리스트 로딩시의 블로킹 처리를 위해 내부 thread 사용.
+     * 1. 이미지 뷰 비율과 실제 이미지 크기의 비율 계산
+     * 2. svg 이미지 뷰의 리소스 크기에 위 비율 곱
+     * 3. 안드로이드 9와 상위버전 저장방식 분기하여 저장 프로세스 실행.
+     */
     override suspend fun overlayImages(info: OverlayInfo) = suspendCoroutine<OverlayResult>  { continuation ->
         thread {
             var background: Bitmap? = null
@@ -61,14 +68,17 @@ class MediaRepositoryImpl @Inject constructor(
                     decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
                 }
 
+                //비율 계산
                 val bgRatioW = background.width.toFloat() / info.bgIntrinsicWidth.toFloat()
                 val bgRatioH = background.height.toFloat() / info.bgIntrinsicHeight.toFloat()
 
+                //비율 참조하여 svg 이미지 비트맵 생성
                 resource = PictureDrawable(SVG.getFromAsset(context.assets, info.resourceAssetPath).apply {
                     documentWidth = info.resourceMeasuredWidth.toFloat() * bgRatioW
                     documentHeight = info.resourceMeasuredHeight.toFloat() * bgRatioH
                 }.renderToPicture()).toBitmap()
 
+                //Overlay
                 result = Bitmap.createBitmap(background.width, background.height, background.config)
                 val canvas = Canvas(result)
                 val moveH = ((background.width - resource.width) / 2).toFloat()
@@ -77,7 +87,7 @@ class MediaRepositoryImpl @Inject constructor(
                 canvas.drawBitmap(resource, moveH, moveV, null)
 
 
-
+                //Q 이상이면 미디어스토어 사용
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     val uri = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
                     val values = ContentValues().apply {
@@ -100,6 +110,7 @@ class MediaRepositoryImpl @Inject constructor(
                     values.clear()
                     values.put(MediaStore.Images.Media.IS_PENDING, 0)
                     context.contentResolver.update(item, values, null, null)
+                //미만이면 FileOutputStream 사용
                 } else {
                     val imgFile = File(info.item.path, fileName)
 
@@ -127,6 +138,9 @@ class MediaRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     * 오버레이 리소스 가져옴
+     */
     override suspend fun getOverlayResources(assetPath:String) = suspendCoroutine<Resource<List<String>>> { continuation ->
         thread {
             context.assets.list(assetPath)?.let {
@@ -137,6 +151,9 @@ class MediaRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     * 앨범 리스트 로딩.
+     */
     override suspend fun getAlbumList() = withContext(defaultDispatcher) {
 
         val pathColumn = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { MediaStore.Images.ImageColumns.RELATIVE_PATH } else { MediaStore.Images.ImageColumns.DATA }

@@ -4,7 +4,10 @@ import com.picker.overlay.domain.model.OverlayInfo
 import com.picker.overlay.domain.repository.MediaRepository
 import javax.inject.Inject
 
-class OverlayImagesUseCase @Inject constructor(
+/**
+ * 이미지 저장 관련 usecase
+ */
+class SaveImageUseCase @Inject constructor(
     private val mediaRepository: MediaRepository
 ){
 

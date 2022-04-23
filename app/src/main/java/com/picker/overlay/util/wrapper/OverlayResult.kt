@@ -1,7 +1,7 @@
 package com.picker.overlay.util.wrapper
 
 /**
- * Wrapper
+ * 오버레이 프로세스 용 Wrapper
  */
 sealed class OverlayResult {
     object Init: OverlayResult()
