@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -12,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.R
 import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentPhotoPickerBinding
@@ -56,7 +57,7 @@ class PhotoPickerFragment: Fragment() {
                                     ))
                                 }
                                 else -> {
-                                    Snackbar.make(binding.root, getString(R.string.err_no_overlay_target), Snackbar.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(), getString(R.string.err_no_overlay_target), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -69,13 +70,22 @@ class PhotoPickerFragment: Fragment() {
             }
         }
 
+        initStates()
+        requestStoragePermission.launch(sharedViewModel.REQUIRED_STORAGE_PERMISSIONS)
+    }
 
-        sharedViewModel.checkStorageAccessPermission(this@PhotoPickerFragment, sharedViewModel.REQUIRED_STORAGE_PERMISSIONS, {
-            initStates()
+    private val requestStoragePermission = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        val requiredList = mutableListOf<String>()
+        permissions.entries.forEach {
+            if(!it.value) requiredList.add(it.key)
+        }
+
+        if(requiredList.size <= 0) {
             viewModel.getPhotoList(args.album)
-        }, {
+        }
+        else {
             findNavController().navigateUp()
-        })
+        }
     }
 
     private fun initStates() {
@@ -86,14 +96,14 @@ class PhotoPickerFragment: Fragment() {
                         when(it) {
                             is Resource.Success -> {
                                 if(it.data.isEmpty()) {
-                                    Snackbar.make(binding.root, getString(R.string.msg_no_image_found), Snackbar.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(), getString(R.string.msg_no_image_found), Toast.LENGTH_SHORT).show()
                                 }
                                 else {
                                     (binding.rcPhotoList.adapter as PhotoPickerAdapter).submitList(it.data)
                                 }
                             }
                             is Resource.Failure -> {
-                                Snackbar.make(binding.rcPhotoList, it.msg, Snackbar.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

@@ -39,14 +39,15 @@ import kotlin.concurrent.thread
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-
+/**
+ * Media 관련 작업 Repo
+ */
 class MediaRepositoryImpl @Inject constructor(
     @ApplicationContext private val context:Context,
     @AppModule.IODispatcher private val defaultDispatcher: CoroutineDispatcher
 ): MediaRepository {
 
     override suspend fun overlayImages(info: OverlayInfo) = suspendCoroutine<OverlayResult>  { continuation ->
-
         thread {
             var background: Bitmap? = null
             var resource: Bitmap? = null

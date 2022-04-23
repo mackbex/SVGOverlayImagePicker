@@ -1,9 +1,12 @@
 package com.picker.overlay.ui.picker.album.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -11,7 +14,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.R
 import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentAlbumListBinding
@@ -27,7 +29,6 @@ class AlbumListFragment : Fragment() {
     private var binding: FragmentAlbumListBinding by autoCleared()
     private val viewModel: AlbumListViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,15 +61,31 @@ class AlbumListFragment : Fragment() {
             }
         }
 
-        sharedViewModel.checkStorageAccessPermission(this@AlbumListFragment, sharedViewModel.REQUIRED_STORAGE_PERMISSIONS, {
-            //파일 접근 권한이 주어졌을 때 collect 시작
-            initStates()
-            //stateIn 대신 수동으로 호출하는 이유 : Databinding으로 visibility 등 연결이 되어있기 때문에, 권한 획득 여부에 대한 분기를 stateflow 하나로 처리하기 위해 사용.
+
+        initStates()
+
+        requestStoragePermission.launch(sharedViewModel.REQUIRED_STORAGE_PERMISSIONS)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(sharedViewModel.isPermissionGranted(requireContext(), sharedViewModel.REQUIRED_STORAGE_PERMISSIONS)) {
             viewModel.getAlbumList()
-        }, {
-            //반대의 경우, Failure
+        }
+    }
+
+    private val requestStoragePermission = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        val requiredList = mutableListOf<String>()
+        permissions.entries.forEach {
+            if(!it.value) requiredList.add(it.key)
+        }
+
+        if(requiredList.size <= 0) {
+            viewModel.getAlbumList()
+        }
+        else {
             viewModel.albumListState.value = Resource.Failure(getString(R.string.msg_storage_permission_denied))
-        })
+        }
     }
 
     private fun initStates() {
@@ -79,14 +96,15 @@ class AlbumListFragment : Fragment() {
                         when(it) {
                             is Resource.Success -> {
                                 if(it.data.isEmpty()) {
-                                    Snackbar.make(binding.root, getString(R.string.msg_no_image_found), Snackbar.LENGTH_SHORT).show()
+
+                                    Toast.makeText(requireContext(), getString(R.string.msg_no_image_found), Toast.LENGTH_SHORT).show()
                                 }
                                 else {
                                     (binding.rcAlbumList.adapter as AlbumListAdapter).submitList(it.data.values.toList())
                                 }
                             }
                             is Resource.Failure -> {
-                                Snackbar.make(binding.rcAlbumList, it.msg, Snackbar.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

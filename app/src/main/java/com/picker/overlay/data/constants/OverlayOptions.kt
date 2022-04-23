@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.text.format.DateFormat
 import java.util.*
 
+// 이미지 오버레이 실행 시의 옵션 리스트
 object OverlayOptions {
     val compressFormat = Bitmap.CompressFormat.JPEG
     const val compressQuality = 100

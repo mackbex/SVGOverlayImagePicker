@@ -50,6 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/black"
             android:visibility="@{viewModel.albumListState instanceof Resource.Failure ? View.VISIBLE : View.GONE}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

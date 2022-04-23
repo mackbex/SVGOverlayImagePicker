@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -14,7 +16,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.caverock.androidsvg.SVG
-import com.google.android.material.snackbar.Snackbar
 import com.picker.overlay.SharedViewModel
 import com.picker.overlay.databinding.FragmentPhotoOverlayBinding
 import com.picker.overlay.util.wrapper.OverlayResult
@@ -70,12 +71,23 @@ class OverlayFragment:Fragment() {
             }
         }
 
-        sharedViewModel.checkStorageAccessPermission(this@OverlayFragment, sharedViewModel.REQUIRED_STORAGE_PERMISSIONS, {
-            initStates()
+        initStates()
+
+        requestStoragePermission.launch(sharedViewModel.REQUIRED_STORAGE_PERMISSIONS)
+    }
+
+    private val requestStoragePermission = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        val requiredList = mutableListOf<String>()
+        permissions.entries.forEach {
+            if(!it.value) requiredList.add(it.key)
+        }
+
+        if(requiredList.size <= 0) {
             viewModel.getOverlayResources("svg")
-        }, {
-            findNavController().navigateUp()
-        })
+        }
+        else {
+            findNavController().navigate(OverlayFragmentDirections.actionOverlayFragmentToAlbumListFragment())
+        }
     }
 
     private fun initStates() {
@@ -85,7 +97,7 @@ class OverlayFragment:Fragment() {
                     viewModel.overlayResourcesState.collect {
                         when(it) {
                             is Resource.Failure -> {
-                                Snackbar.make(binding.rcOverlayList, it.msg, Snackbar.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -94,7 +106,9 @@ class OverlayFragment:Fragment() {
                     viewModel.overlayImagesState.collect {
                         when(it) {
                             is OverlayResult.Failure -> {
-                                Snackbar.make(binding.rcOverlayList, it.msg, Snackbar.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
+                                findNavController().navigateUp()
+
                             }
                             is OverlayResult.Success -> {
                                 findNavController().navigate(OverlayFragmentDirections.actionOverlayFragmentToAlbumListFragment())
