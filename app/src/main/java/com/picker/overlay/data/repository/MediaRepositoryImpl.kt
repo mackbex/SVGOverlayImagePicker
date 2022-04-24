@@ -20,9 +20,9 @@ import com.picker.overlay.data.constants.OverlayOptions.compressFormat
 import com.picker.overlay.data.constants.OverlayOptions.compressQuality
 import com.picker.overlay.data.constants.OverlayOptions.getFileName
 import com.picker.overlay.di.AppModule
+import com.picker.overlay.domain.model.Album
 import com.picker.overlay.domain.model.OverlayInfo
 import com.picker.overlay.domain.model.Photo
-import com.picker.overlay.domain.model.PhotoAlbum
 import com.picker.overlay.domain.repository.MediaRepository
 import com.picker.overlay.util.wrapper.OverlayResult
 import com.picker.overlay.util.wrapper.Resource
@@ -157,7 +157,7 @@ class MediaRepositoryImpl @Inject constructor(
     override suspend fun getAlbumList() = withContext(defaultDispatcher) {
 
         val pathColumn = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { MediaStore.Images.ImageColumns.RELATIVE_PATH } else { MediaStore.Images.ImageColumns.DATA }
-        val albums = HashMap<String, PhotoAlbum>()
+        val albums = HashMap<String, Album>()
         val projection = arrayOf(
             MediaStore.Images.ImageColumns._ID,
             MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
@@ -205,7 +205,7 @@ class MediaRepositoryImpl @Inject constructor(
                     val path = cursor.getString(cursor.getColumnIndexOrThrow(pathColumn))
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.SIZE)) ?: continue
 
-                    val albumItem = albums.getOrDefault(bucket, PhotoAlbum(bucket, mutableListOf()))
+                    val albumItem = albums.getOrDefault(bucket, Album(bucket, mutableListOf()))
                     albumItem.list.add(
                         Photo(
                             bucket,

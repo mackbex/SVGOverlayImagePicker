@@ -1,6 +1,8 @@
 package com.picker.overlay.domain.model
 
- interface Album {
-    val title:String
+import java.io.Serializable
+
+data class Album(
+    val title:String,
     val list:MutableList<AlbumItem>
-}
+): Serializable
