@@ -94,8 +94,4 @@ dependencies {
      */
     implementation 'com.caverock:androidsvg-aar:1.4'
 
-    /**
-     * PhotoView
-     */
-    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 }
