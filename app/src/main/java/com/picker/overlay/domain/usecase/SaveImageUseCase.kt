@@ -10,6 +10,5 @@ import javax.inject.Inject
 class SaveImageUseCase @Inject constructor(
     private val mediaRepository: MediaRepository
 ){
-
     suspend fun overlayImages(info:OverlayInfo) = mediaRepository.overlayImages(info)
 }

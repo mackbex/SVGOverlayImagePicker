@@ -35,9 +35,6 @@ import java.io.FileOutputStream
 import java.lang.Exception
 import javax.inject.Inject
 import kotlin.collections.HashMap
-import kotlin.concurrent.thread
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Media 관련 작업 Repo
@@ -54,100 +51,97 @@ class MediaRepositoryImpl @Inject constructor(
      * 2. svg 이미지 뷰의 리소스 크기에 위 비율 곱
      * 3. 안드로이드 9와 상위버전 저장방식 분기하여 저장 프로세스 실행.
      */
-    override suspend fun overlayImages(info: OverlayInfo) = suspendCoroutine<OverlayResult>  { continuation ->
-        thread {
-            var background: Bitmap? = null
-            var resource: Bitmap? = null
-            var result: Bitmap? = null
-            val fileName = getFileName()
-            try {
-                background = ImageDecoder.decodeBitmap(
-                    ImageDecoder.createSource(context.contentResolver, Uri.parse(info.item.uri))
-                ) { decoder: ImageDecoder, _: ImageDecoder.ImageInfo?, _: ImageDecoder.Source? ->
-                    decoder.isMutableRequired = true
-                    decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+    override suspend fun overlayImages(info: OverlayInfo) = withContext(defaultDispatcher)  {
+        var background: Bitmap? = null
+        var resource: Bitmap? = null
+        var result: Bitmap? = null
+        val fileName = getFileName()
+        try {
+            background = ImageDecoder.decodeBitmap(
+                ImageDecoder.createSource(context.contentResolver, Uri.parse(info.item.uri))
+            ) { decoder: ImageDecoder, _: ImageDecoder.ImageInfo?, _: ImageDecoder.Source? ->
+                decoder.isMutableRequired = true
+                decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+            }
+
+            //비율 계산
+            val bgRatioW = background.width.toFloat() / info.bgIntrinsicWidth.toFloat()
+            val bgRatioH = background.height.toFloat() / info.bgIntrinsicHeight.toFloat()
+
+            //비율 참조하여 svg 이미지 비트맵 생성
+            resource = PictureDrawable(SVG.getFromAsset(context.assets, info.resourceAssetPath).apply {
+                documentWidth = info.resourceMeasuredWidth.toFloat() * bgRatioW
+                documentHeight = info.resourceMeasuredHeight.toFloat() * bgRatioH
+            }.renderToPicture()).toBitmap()
+
+            //Overlay
+            result = Bitmap.createBitmap(background.width, background.height, background.config)
+            val canvas = Canvas(result)
+            val moveH = ((background.width - resource.width) / 2).toFloat()
+            val moveV = ((background.height - resource.height) / 2).toFloat()
+            canvas.drawBitmap(background, 0f, 0f, null)
+            canvas.drawBitmap(resource, moveH, moveV, null)
+
+
+            //Q 이상이면 미디어스토어 사용
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val uri = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+                val values = ContentValues().apply {
+                    put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+                    put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+                    put(MediaStore.Images.Media.RELATIVE_PATH, info.item.path)
+                    put(MediaStore.Images.Media.IS_PENDING, 1)
                 }
 
-                //비율 계산
-                val bgRatioW = background.width.toFloat() / info.bgIntrinsicWidth.toFloat()
-                val bgRatioH = background.height.toFloat() / info.bgIntrinsicHeight.toFloat()
-
-                //비율 참조하여 svg 이미지 비트맵 생성
-                resource = PictureDrawable(SVG.getFromAsset(context.assets, info.resourceAssetPath).apply {
-                    documentWidth = info.resourceMeasuredWidth.toFloat() * bgRatioW
-                    documentHeight = info.resourceMeasuredHeight.toFloat() * bgRatioH
-                }.renderToPicture()).toBitmap()
-
-                //Overlay
-                result = Bitmap.createBitmap(background.width, background.height, background.config)
-                val canvas = Canvas(result)
-                val moveH = ((background.width - resource.width) / 2).toFloat()
-                val moveV = ((background.height - resource.height) / 2).toFloat()
-                canvas.drawBitmap(background, 0f, 0f, null)
-                canvas.drawBitmap(resource, moveH, moveV, null)
-
-
-                //Q 이상이면 미디어스토어 사용
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    val uri = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
-                    val values = ContentValues().apply {
-                        put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-                        put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-                        put(MediaStore.Images.Media.RELATIVE_PATH, info.item.path)
-                        put(MediaStore.Images.Media.IS_PENDING, 1)
-                    }
-
-                    val item = context.contentResolver.insert(uri, values)!!
-                    context.contentResolver.openFileDescriptor(item, "rw").use { parcel ->
-                        ByteArrayOutputStream().use { bao ->
-                            result.compress(compressFormat, compressQuality, bao)
-                            FileOutputStream(parcel!!.fileDescriptor).use { out ->
-                                out.write(bao.toByteArray())
-                            }
+                val item = context.contentResolver.insert(uri, values)!!
+                context.contentResolver.openFileDescriptor(item, "rw").use { parcel ->
+                    ByteArrayOutputStream().use { bao ->
+                        result.compress(compressFormat, compressQuality, bao)
+                        FileOutputStream(parcel!!.fileDescriptor).use { out ->
+                            out.write(bao.toByteArray())
                         }
                     }
-
-                    values.clear()
-                    values.put(MediaStore.Images.Media.IS_PENDING, 0)
-                    context.contentResolver.update(item, values, null, null)
-                //미만이면 FileOutputStream 사용
-                } else {
-                    val imgFile = File(info.item.path, fileName)
-
-                    FileOutputStream(imgFile).use { fos ->
-                        result.compress(compressFormat, compressQuality, fos)
-                        MediaScannerConnection.scanFile(
-                            context,
-                            arrayOf(imgFile.toString()),
-                            null,
-                            null
-                        )
-                    }
                 }
-                continuation.resume(OverlayResult.Success)
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-                continuation.resume(OverlayResult.Failure(context.getString(R.string.err_failed_overlay_image)))
+                values.clear()
+                values.put(MediaStore.Images.Media.IS_PENDING, 0)
+                context.contentResolver.update(item, values, null, null)
+            //미만이면 FileOutputStream 사용
+            } else {
+                val imgFile = File(info.item.path, fileName)
 
-            } finally {
-                background?.recycle()
-                resource?.recycle()
-                result?.recycle()
+                FileOutputStream(imgFile).use { fos ->
+                    result.compress(compressFormat, compressQuality, fos)
+                    MediaScannerConnection.scanFile(
+                        context,
+                        arrayOf(imgFile.toString()),
+                        null,
+                        null
+                    )
+                }
             }
+            return@withContext OverlayResult.Success
+
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            return@withContext OverlayResult.Failure(context.getString(R.string.err_failed_overlay_image))
+
+        } finally {
+            background?.recycle()
+            resource?.recycle()
+            result?.recycle()
         }
     }
 
     /**
      * 오버레이 리소스 가져옴
      */
-    override suspend fun getOverlayResources(assetPath:String) = suspendCoroutine<Resource<List<String>>> { continuation ->
-        thread {
-            context.assets.list(assetPath)?.let {
-                continuation.resume(Resource.Success(it.toList().map { fileName -> assetPath + File.separator + fileName }))
-            } ?: run {
-                continuation.resume(Resource.Failure(context.getString(R.string.err_failed_to_load_overlay_resources)))
-            }
+    override suspend fun getOverlayResources(assetPath:String) = withContext(defaultDispatcher) {
+        context.assets.list(assetPath)?.let {
+            return@withContext Resource.Success(it.toList().map { fileName -> assetPath + File.separator + fileName })
+        } ?: run {
+            return@withContext Resource.Failure(context.getString(R.string.err_failed_to_load_overlay_resources))
         }
     }
 
